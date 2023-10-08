@@ -20,15 +20,17 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="50a19" class="javax.swing.JTextField" binding="textField1" default-binding="true">
+              <component id="50a19" class="javax.swing.JTextField" binding="search">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="-1"/>
                   </grid>
                 </constraints>
-                <properties/>
+                <properties>
+                  <text value="чемпион"/>
+                </properties>
               </component>
-              <component id="337f" class="javax.swing.JButton" binding="поискButton" default-binding="true">
+              <component id="337f" class="javax.swing.JButton" binding="searchButton">
                 <constraints>
                   <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -45,7 +47,7 @@
             </properties>
             <border type="none"/>
             <children>
-              <component id="35dd2" class="javax.swing.JList" binding="list1" default-binding="true">
+              <component id="35dd2" class="javax.swing.JList" binding="list">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="50"/>
@@ -56,7 +58,7 @@
                   <selectionMode value="0"/>
                 </properties>
               </component>
-              <component id="15dcc" class="javax.swing.JTextArea" binding="textArea2" default-binding="true">
+              <component id="15dcc" class="javax.swing.JTextArea" binding="textArea">
                 <constraints>
                   <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="50"/>
@@ -86,7 +88,7 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="c0d3b" class="javax.swing.JSlider" binding="slider1" default-binding="true">
+              <component id="c0d3b" class="javax.swing.JSlider" binding="slider">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -99,7 +101,7 @@
                   <value value="10"/>
                 </properties>
               </component>
-              <component id="df31c" class="javax.swing.JRadioButton" binding="схемаRadioButton" default-binding="true">
+              <component id="df31c" class="javax.swing.JRadioButton" binding="schemaRadioButton">
                 <constraints>
                   <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -108,7 +110,7 @@
                   <text value="Схема"/>
                 </properties>
               </component>
-              <component id="63e1" class="javax.swing.JRadioButton" binding="спутникRadioButton" default-binding="true">
+              <component id="63e1" class="javax.swing.JRadioButton" binding="satelliteRadioButton">
                 <constraints>
                   <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -116,7 +118,7 @@
                   <text value="Спутник"/>
                 </properties>
               </component>
-              <component id="fd13" class="javax.swing.JRadioButton" binding="пробкиRadioButton" default-binding="true">
+              <component id="c3bc0" class="javax.swing.JCheckBox" binding="jamsCheckBox">
                 <constraints>
                   <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -126,7 +128,7 @@
               </component>
             </children>
           </grid>
-          <grid id="28d98" layout-manager="BorderLayout" hgap="0" vgap="0">
+          <grid id="28d98" binding="mapPanel" custom-create="true" layout-manager="BorderLayout" hgap="0" vgap="0">
             <constraints border-constraint="Center"/>
             <properties/>
             <border type="none"/>
