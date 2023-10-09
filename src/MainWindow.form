@@ -27,7 +27,7 @@
                   </grid>
                 </constraints>
                 <properties>
-                  <text value="чемпион"/>
+                  <text value="slkdjf;asldkfj asdl;fkajs df"/>
                 </properties>
               </component>
               <component id="337f" class="javax.swing.JButton" binding="searchButton">
@@ -42,9 +42,7 @@
           </grid>
           <grid id="eabf2" layout-manager="GridBagLayout">
             <constraints border-constraint="Center"/>
-            <properties>
-              <background color="-15657168"/>
-            </properties>
+            <properties/>
             <border type="none"/>
             <children>
               <component id="35dd2" class="javax.swing.JList" binding="list">

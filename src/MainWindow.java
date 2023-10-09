@@ -32,17 +32,16 @@ public class MainWindow extends JFrame {
     private JSlider slider;
     private JRadioButton schemaRadioButton;
     private JRadioButton satelliteRadioButton;
-    private JRadioButton jamsRadioButton;
     private JPanel mapPanel;
     private JCheckBox jamsCheckBox;
-    public int curSliderValue = 10;
-    public int curIndex = -1;
-    private JRadioButton curRadio;
+    private boolean showJamsLayout = false;
     private JSONArray geodata = null;
     private Image images[][];
+    private JRadioButton curRadio;
     public Image curImage = null;
+    public int curIndex = -1;
+    public int curSliderValue = 10;
     private String curSearch = "";
-    private boolean showJamsLayout = false;
 
     public MainWindow() {
         super("Карты");
@@ -53,7 +52,9 @@ public class MainWindow extends JFrame {
         this.setLocation(d.width / 2 - MainWindow.width / 2, d.height / 2 - MainWindow.height / 2);
         this.getContentPane().add(panel);
 
-        curSliderValue = slider.getValue();
+        slider.setValue(curSliderValue);
+        search.setText(curSearch);
+        schemaRadioButton.setSelected(true);
         curRadio = getSelectedRadio();
 
         searchButton.addActionListener(new ActionListener() {
@@ -96,17 +97,6 @@ public class MainWindow extends JFrame {
                 }
             }
         });
-
-        list.addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-//                try {
-//                    list_valueChanged(e);
-//                } catch (IOException ex) {
-//                    throw new RuntimeException(ex);
-//                }
-            }
-        });
         jamsCheckBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -117,17 +107,17 @@ public class MainWindow extends JFrame {
                 }
             }
         });
-        list.addMouseListener(new MouseAdapter() {
+        list.addListSelectionListener(new ListSelectionListener() {
             @Override
-            public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
-                if (e.getButton() == 1) {
-                    curIndex = list.locationToIndex(e.getPoint());
-                    try {
-                        listSelected();
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
+            public void valueChanged(ListSelectionEvent e) {
+                ListSelectionModel lsm = ((JList<String>) e.getSource()).getSelectionModel();
+                System.out.println("valueChanged: " + lsm.getMinSelectionIndex());
+
+                curIndex = lsm.getMinSelectionIndex();
+                try {
+                    listSelected();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
                 }
             }
         });
@@ -166,7 +156,10 @@ public class MainWindow extends JFrame {
         HashMap<String, String> info = new HashMap<>();
 
         info.put("название", props.getString("name"));
-        info.put("описание", props.getString("description"));
+
+        if (props.has("description")) {
+            info.put("описание", props.getString("description"));
+        }
 
         if (props.has("CompanyMetaData")) {
             JSONObject metadata = props.getJSONObject("CompanyMetaData");
@@ -235,13 +228,21 @@ public class MainWindow extends JFrame {
     }
 
     public void searchButton_actionPerformed(ActionEvent e) throws IOException {
-        curSearch = search.getText();
-        geodata = doSearch();
-        fillList();
         clearImages();
-        textArea.setText("");
+        curIndex = -1;
         curImage = null;
+        curSliderValue = 10;
+        curRadio = schemaRadioButton;
+        curSearch = search.getText();
+
+        slider.setValue(curSliderValue);
         mapPanel.repaint();
+        textArea.setText("");
+
+        if (!curSearch.equals("")) {
+            geodata = doSearch();
+            fillList();
+        }
     }
 
     public void fillList() {
@@ -253,13 +254,16 @@ public class MainWindow extends JFrame {
             bizText = properties.has("CompanyMetaData")
                     ? properties.getString("name") + " (организация)"
                     : properties.getString("name");
-            model.add(0,properties.getString("name") + " " + bizText);
+            model.add(model.getSize(),properties.getString("name") + " " + bizText);
         }
         list.setModel(model);
     }
 
     private void clearImages() {
         images = null;
+    }
+
+    private void initImagesCache() {
         if (geodata != null) {
             images = new Image[geodata.length()][21];
             for (int i = 0; i < geodata.length(); i++) {
@@ -271,8 +275,12 @@ public class MainWindow extends JFrame {
     }
 
     public void loadImage() throws IOException {
+        System.out.println("loadImages: " + curIndex);
         if (curIndex == -1) {
             return;
+        }
+        if (images == null) {
+            initImagesCache();
         }
         if (images[curIndex][curSliderValue] == null) {
             JSONArray coords = ((JSONObject) geodata.get(curIndex)).getJSONObject("geometry").getJSONArray("coordinates");
